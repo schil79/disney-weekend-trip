@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summer Kickoff Disney Weekend</title>
+  <style>
+    :root {
+      --navy: #123047;
+      --blue: #2e7896;
+      --ice: #dff6fb;
+      --teal: #7ec8c4;
+      --cream: #fff7e8;
+      --green: #315c45;
+      --gold: #f3b33d;
+      --card: rgba(255,255,255,.96);
+      --soft: #f7fbfc;
+      --shadow: 0 18px 50px rgba(18,48,71,.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: #263238;
+      background:
+        linear-gradient(rgba(18,48,71,.64), rgba(18,48,71,.55)),
+        url("https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1800&q=80");
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+    }
+
+    header {
+      padding: 32px 16px 20px;
+      color: white;
+      text-align: center;
+    }
+
+    .hero {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 30px 22px;
+      border-radius: 30px;
+      background: rgba(18,48,71,.72);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+    }
+
+    .eyebrow {
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      opacity: .92;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: clamp(2.05rem, 7vw, 4.7rem);
+      line-height: .95;
+      margin: 0 0 14px;
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      margin: 0 auto 20px;
+      max-width: 760px;
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 840px;
+      margin: 22px auto 0;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 18px;
+      padding: 13px;
+      font-size: .95rem;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+    }
+
+    .app {
+      max-width: 1080px;
+      margin: 0 auto 60px;
+      padding: 0 16px 40px;
+    }
+
+    .tabs-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 12px 0;
+      background: linear-gradient(rgba(18,48,71,.98), rgba(18,48,71,.82), rgba(18,48,71,0));
+      backdrop-filter: blur(5px);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 2px 10px;
+    }
+
+    .tab-btn {
+      appearance: none;
+      border: 0;
+      background: rgba(255,255,255,.92);
+      color: var(--navy);
+      padding: 12px 15px;
+      border-radius: 999px;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px rgba(0,0,0,.18);
+      cursor: pointer;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .tab-btn:hover { transform: translateY(-1px); }
+
+    .tab-btn.active {
+      background: var(--teal);
+      color: #07343b;
+    }
+
+    .panel {
+      display: none;
+      background: var(--card);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(6px);
+      animation: fade .18s ease-in;
+    }
+
+    .panel.active { display: block; }
+
+    @keyframes fade {
+      from { opacity: .25; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin: 0 0 10px;
+      color: var(--navy);
+    }
+
+    h3 {
+      margin: 22px 0 10px;
+      color: var(--green);
+      font-size: 1.3rem;
+    }
+
+    a {
+      color: #0b5cab;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .lede {
+      font-size: 1.06rem;
+      color: #455a64;
+      max-width: 880px;
+    }
+
+    .note {
+      background: #fff4d6;
+      border-left: 6px solid var(--gold);
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin: 18px 0;
+    }
+
+    .timeline { margin-top: 20px; }
+
+    .item {
+      display: grid;
+      grid-template-columns: 115px 1fr;
+      gap: 18px;
+      padding: 16px 0;
+      border-bottom: 1px solid #e6eef2;
+    }
+
+    .item:last-child { border-bottom: none; }
+
+    .time {
+      font-weight: 900;
+      color: var(--blue);
+      font-size: 1rem;
+    }
+
+    .title {
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 4px;
+      font-size: 1.08rem;
+    }
+
+    .desc { color: #455a64; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .grid3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .card {
+      background: var(--soft);
+      border: 1px solid #e1edf0;
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .card h3 { margin-top: 0; }
+
+    .emoji {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    ul {
+      padding-left: 21px;
+      margin-top: 8px;
+    }
+
+    li { margin: 6px 0; }
+
+    .tag {
+      display: inline-block;
+      background: #e7f5f5;
+      color: var(--green);
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 800;
+      margin: 4px 4px 4px 0;
+    }
+
+    .route {
+      counter-reset: step;
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .route div {
+      background: white;
+      border: 1px solid #e7ecef;
+      border-radius: 18px;
+      padding: 14px 15px 14px 52px;
+      position: relative;
+      min-height: 50px;
+    }
+
+    .route div:before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 14px;
+      top: 12px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: #07343b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .weather {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .weather-card {
+      background: linear-gradient(145deg, #e9fbff, #fff);
+      border: 1px solid #d4eef3;
+      border-radius: 22px;
+      padding: 22px;
+      text-align: center;
+    }
+
+    .weather-card .big {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .weather-card .small {
+      color: #455a64;
+      margin-top: 5px;
+    }
+
+    .footer {
+      text-align: center;
+      color: white;
+      padding: 30px 20px 60px;
+      text-shadow: 0 1px 6px rgba(0,0,0,.4);
+    }
+
+    .home-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 780px) {
+      .quick-stats, .grid, .grid3, .weather, .home-cards { grid-template-columns: 1fr; }
+      .panel { padding: 22px; border-radius: 22px; }
+      .item { grid-template-columns: 1fr; gap: 3px; }
+      .hero { padding: 26px 18px; }
+    }
+
+    @media print {
+      body { background: white; color: black; }
+      header, .footer { color: black; }
+      .tabs-wrap { display: none; }
+      .panel { display: block !important; box-shadow: none; break-inside: avoid; }
+      .app { margin: 0; }
+      a { color: black; text-decoration: underline; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <div class="eyebrow">Disney Summer Kickoff</div>
+      <h1>Blizzard Beach + Wilderness Lodge</h1>
+      <p class="subtitle">A clickable weekend guide for a relaxed family water park + resort getaway.</p>
+      <div class="quick-stats">
+        <div class="stat"><strong>Saturday, June 6</strong>Blizzard Beach + resort night</div>
+        <div class="stat"><strong>Sunday, June 7</strong>Pool day + easy drive home</div>
+        <div class="stat"><strong>Home Base</strong>Disney’s Wilderness Lodge</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="app">
+    <div class="tabs-wrap">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+        <button class="tab-btn" onclick="showTab('day1')">Day 1 Water Park</button>
+        <button class="tab-btn" onclick="showTab('evening')">Day 1 Evening</button>
+        <button class="tab-btn" onclick="showTab('day2')">Day 2 Pool Day</button>
+        <button class="tab-btn" onclick="showTab('menus')">Menus</button>
+        <button class="tab-btn" onclick="showTab('map')">Blizzard Map + Route</button>
+        <button class="tab-btn" onclick="showTab('activities')">Resort Activities</button>
+        <button class="tab-btn" onclick="showTab('weather')">Weather</button>
+        <button class="tab-btn" onclick="showTab('packing')">Packing</button>
+      </div>
+    </div>
+
+    <section id="overview" class="panel active">
+      <h2>Weekend Game Plan</h2>
+      <p class="lede">The goal is not to overdo Disney. The goal is a fun, easy, summer-kickoff weekend: water park Saturday, cozy Wilderness Lodge evening, pool day Sunday, and home before everyone completely crashes.</p>
+      <div>
+        <span class="tag">No theme park tickets</span>
+        <span class="tag">No huge drop slides</span>
+        <span class="tag">Mobile order lunch at 12</span>
+        <span class="tag">Eat lunch at 12:30</span>
+        <span class="tag">Leave Blizzard around 4</span>
+        <span class="tag">S’mores + Water Pageant</span>
+      </div>
+
+      <div class="home-cards">
+        <div class="card">
+          <span class="emoji">🌊</span>
+          <h3>Saturday Mood</h3>
+          <p>Excitement first: chairs, best family rides, Ski Patrol, lunch, wave pool, lazy river, dessert, favorite repeats, then head to Wilderness Lodge.</p>
+        </div>
+
+        <div class="card">
+          <span class="emoji">🌲</span>
+          <h3>Sunday Mood</h3>
+          <p>Slow breakfast, resort exploring, checkout, Bell Services, pool, snacks, lunch, more pool, change, drive home.</p>
+        </div>
+      </div>
+
+      <div class="note"><strong>Best mindset:</strong> If the kids are happy somewhere, stay there. This itinerary is a guide, not a strict schedule.</div>
+    </section>
+
+    <section id="day1" class="panel">
+      <h2>Day 1: Blizzard Beach Play-by-Play</h2>
+      <p class="lede">Park opens at 10:00 AM. Arriving 9:00–9:30 gives you time to park, sunscreen, enter calmly, and claim a good base camp.</p>
+
+      <div class="timeline">
+        <div class="item"><div class="time">6:00 AM</div><div><div class="title">Leave home</div><div class="desc">Kids wear swimsuits under clothes. Breakfast in the car. Keep water park bag easy to reach.</div></div></div>
+        <div class="item"><div class="time">9:00–9:30</div><div><div class="title">Arrive at Blizzard Beach</div><div class="desc">Park, bathroom stop, sunscreen before entering, quick group photo while everyone is fresh.</div></div></div>
+        <div class="item"><div class="time">9:30–10:00</div><div><div class="title">Claim chairs / base camp</div><div class="desc">Aim for Melt-Away Bay area, reasonably close to Ski Patrol Training Camp. Look for shade or umbrellas.</div></div></div>
+        <div class="item"><div class="time">10:00</div><div><div class="title">Teamboat Springs</div><div class="desc">First ride. Best group/family ride and lines grow later.</div></div></div>
+        <div class="item"><div class="time">10:25</div><div><div class="title">Toboggan Racers</div><div class="desc">Fun racing slides. Not scary, great for kids and adults.</div></div></div>
+        <div class="item"><div class="time">10:45</div><div><div class="title">Runoff Rapids</div><div class="desc">Tube slide with manageable thrills. If the wait is too long, skip and move to Ski Patrol.</div></div></div>
+        <div class="item"><div class="time">11:10</div><div><div class="title">Ski Patrol Training Camp</div><div class="desc">Zipline drop, iceberg crossing, obstacle-style play, and smaller thrills. This may become a kid favorite.</div></div></div>
+        <div class="item"><div class="time">12:00 PM</div><div><div class="title">Mobile order lunch</div><div class="desc">One adult orders from <a href="https://disneyworld.disney.go.com/dining/blizzard-beach/lottawatta-lodge/menus/all-day/" target="_blank">Lottawatta Lodge</a> for a 12:30 pickup. Everyone can pick what they want.</div></div></div>
+        <div class="item"><div class="time">12:30</div><div><div class="title">Lunch at Lottawatta Lodge</div><div class="desc">Eat, hydrate, and reapply sunscreen after lunch.</div></div></div>
+        <div class="item"><div class="time">1:15</div><div><div class="title">Melt-Away Bay Wave Pool</div><div class="desc">Perfect after lunch. Fun, central, and easy to regroup.</div></div></div>
+        <div class="item"><div class="time">1:45</div><div><div class="title">Cross Country Creek Lazy River</div><div class="desc">Float, hydrate, relax, and cool down.</div></div></div>
+        <div class="item"><div class="time">2:15</div><div><div class="title">Dessert at I.C. Expeditions</div><div class="desc">Good time for a frozen treat or shared sundae break.</div></div></div>
+        <div class="item"><div class="time">2:45</div><div><div class="title">Favorite repeats</div><div class="desc">Let the kids choose: Ski Patrol, wave pool, Toboggan Racers, lazy river, or Teamboat if line is good.</div></div></div>
+        <div class="item"><div class="time">3:30</div><div><div class="title">Final water park stretch</div><div class="desc">Keep it flexible. Do not force one more thing if kids are fading.</div></div></div>
+        <div class="item"><div class="time">3:50</div><div><div class="title">Bathrooms, lockers, dry-off</div><div class="desc">Gather towels, wet bags, shoes, sunscreen, and water bottles.</div></div></div>
+        <div class="item"><div class="time">4:00</div><div><div class="title">Leave Blizzard Beach</div><div class="desc">Head to Wilderness Lodge for check-in, showers, dinner, and resort activities.</div></div></div>
+      </div>
+    </section>
+
+    <section id="evening" class="panel">
+      <h2>Day 1 Evening: Wilderness Lodge</h2>
+      <p class="lede">After Blizzard Beach, keep the evening cozy and flexible. The magic is the resort atmosphere, not rushing.</p>
+
+      <div class="timeline">
+        <div class="item"><div class="time">4:30 PM</div><div><div class="title">Arrive + check in</div><div class="desc">If rooms are ready, shower and reset. If not, Bell Services can hold bags and everyone can explore.</div></div></div>
+        <div class="item"><div class="time">4:30–5:30</div><div><div class="title">Check recreation schedule</div><div class="desc">Look for tie-dye, painting/crafts, pool games, campfire, s’mores, Movie Under the Stars, and Water Pageant timing.</div></div></div>
+        <div class="item"><div class="time">5:30–6:30</div><div><div class="title">Dinner: casual and easy</div><div class="desc">Options: Geyser Point, Roaring Fork quick service, or whatever fits everyone’s energy level.</div></div></div>
+        <div class="item"><div class="time">After dinner</div><div><div class="title">Campfire / s’mores</div><div class="desc">Times vary. Follow the Wilderness Lodge recreation schedule posted that day.</div></div></div>
+        <div class="item"><div class="time">Evening</div><div><div class="title">Electrical Water Pageant</div><div class="desc">Watch from the lakefront if timing works. Easy, charming, and very Disney.</div></div></div>
+        <div class="item"><div class="time">Night</div><div><div class="title">Movie Under the Stars</div><div class="desc">Pajamas, blankets, popcorn, glow bracelets. Stay as long as the kids are happy.</div></div></div>
+      </div>
+    </section>
+
+    <section id="day2" class="panel">
+      <h2>Day 2: Pool + Resort Day</h2>
+      <p class="lede">Sunday should feel like vacation. No rushing, no extra transportation, no big agenda.</p>
+
+      <div class="timeline">
+        <div class="item"><div class="time">8:00 AM</div><div><div class="title">Easy breakfast + coffee</div><div class="desc">Use <a href="https://disneyworld.disney.go.com/dining/wilderness-lodge-resort/roaring-fork/menus/breakfast/" target="_blank">Roaring Fork breakfast</a> for coffee, pastries, breakfast sandwiches, Mickey waffles, or grab-and-go options.</div></div></div>
+        <div class="item"><div class="time">9:00</div><div><div class="title">Explore Wilderness Lodge</div><div class="desc">Lobby, geyser, lake walk, gift shop, photos. This is when the resort feels peaceful and beautiful.</div></div></div>
+        <div class="item"><div class="time">10:30</div><div><div class="title">Pack pool bag / checkout prep</div><div class="desc">Dry clothes, toiletries, shoes, and phone chargers should be separate for an easy end of day.</div></div></div>
+        <div class="item"><div class="time">11:00</div><div><div class="title">Checkout + Bell Services</div><div class="desc">Leave luggage with Bell Services if needed. Everyone can still use the pool after checkout.</div></div></div>
+        <div class="item"><div class="time">11:15–12:30</div><div><div class="title">Pool time</div><div class="desc">Waterslide, swim, relax. This is the heart of Sunday.</div></div></div>
+        <div class="item"><div class="time">12:30</div><div><div class="title">Pool lunch</div><div class="desc">Use Roaring Fork, Geyser Point, snacks, or whatever works best.</div></div></div>
+        <div class="item"><div class="time">1:00–4:30</div><div><div class="title">Final pool stretch</div><div class="desc">Swim, snacks, drinks, slide repeats, and relaxed adult time. Keep this unstructured.</div></div></div>
+        <div class="item"><div class="time">4:30</div><div><div class="title">Change + final photo</div><div class="desc">Dry clothes, one last group picture, refill waters, quick bathroom stop.</div></div></div>
+        <div class="item"><div class="time">5:00</div><div><div class="title">Head home</div><div class="desc">Leave before everyone fully crashes. Kids should be tired in the best way.</div></div></div>
+      </div>
+    </section>
+
+    <section id="menus" class="panel">
+      <h2>Menus + Food Links</h2>
+      <p class="lede">Everyone can pick whatever works best for their family. These are the main links to keep handy.</p>
+
+      <div class="grid3">
+        <div class="card">
+          <span class="emoji">🍔</span>
+          <h3>Blizzard Beach Lunch</h3>
+          <p><a href="https://disneyworld.disney.go.com/dining/blizzard-beach/lottawatta-lodge/menus/all-day/" target="_blank">Lottawatta Lodge Menu</a></p>
+          <p>Main quick-service lunch spot at Blizzard Beach. Mobile order through My Disney Experience.</p>
+        </div>
+
+        <div class="card">
+          <span class="emoji">☕</span>
+          <h3>Wilderness Breakfast</h3>
+          <p><a href="https://disneyworld.disney.go.com/dining/wilderness-lodge-resort/roaring-fork/menus/breakfast/" target="_blank">Roaring Fork Breakfast Menu</a></p>
+          <p>Coffee, pastries, breakfast sandwiches, Mickey waffles, and grab-and-go options.</p>
+        </div>
+
+        <div class="card">
+          <span class="emoji">🥪</span>
+          <h3>Wilderness Quick Service</h3>
+          <p><a href="https://disneyworld.disney.go.com/dining/wilderness-lodge-resort/roaring-fork/menus/" target="_blank">Roaring Fork Menus</a></p>
+          <p>Quick-service option for meals and snacks at Wilderness Lodge.</p>
+        </div>
+
+        <div class="card">
+          <span class="emoji">🌲</span>
+          <h3>Geyser Point</h3>
+          <p><a href="https://disneyworld.disney.go.com/dining/wilderness-lodge-resort/geyser-point/menus/" target="_blank">Geyser Point Menu</a></p>
+          <p>Casual lakefront dining at Wilderness Lodge. Great atmosphere if the group has energy after the water park.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="map" class="panel">
+      <h2>Blizzard Beach Map + Our Route</h2>
+      <p class="lede">Use the official map if needed, but the main strategy is simple: base camp near Melt-Away Bay, do the best family rides first, then settle into central play areas.</p>
+
+      <div class="card">
+        <h3>Official Map</h3>
+        <p><a href="https://disneyworld.disney.go.com/destinations/blizzard-beach/map/" target="_blank">Open the Official Blizzard Beach Map</a></p>
+      </div>
+
+      <h3>Our Route</h3>
+      <div class="route">
+        <div><strong>Base Camp:</strong> Chairs near Melt-Away Bay / reasonably close to Ski Patrol.</div>
+        <div><strong>Teamboat Springs:</strong> First ride at opening.</div>
+        <div><strong>Toboggan Racers:</strong> Fun racing slides.</div>
+        <div><strong>Runoff Rapids:</strong> Tube slide if wait is manageable.</div>
+        <div><strong>Ski Patrol Training Camp:</strong> Zipline, iceberg crossing, kid adventure zone.</div>
+        <div><strong>Mobile Order:</strong> Order Lottawatta Lodge at 12:00 for 12:30 lunch.</div>
+        <div><strong>Melt-Away Bay:</strong> Wave pool after lunch.</div>
+        <div><strong>Cross Country Creek:</strong> Lazy river reset.</div>
+        <div><strong>I.C. Expeditions:</strong> Dessert / frozen treat break.</div>
+        <div><strong>Final Favorites:</strong> Let the kids choose repeats until 4:00 PM departure.</div>
+      </div>
+    </section>
+
+    <section id="activities" class="panel">
+      <h2>Wilderness Lodge Activities</h2>
+      <p class="lede">Check the recreation board, front desk, or My Disney Experience after arrival. Offerings and times can change, but these are the kinds of activities to look for.</p>
+
+      <div class="grid">
+        <div class="card">
+          <span class="emoji">🎨</span>
+          <h3>Afternoon / Daytime</h3>
+          <ul>
+            <li>Tie-dye shirt making</li>
+            <li>Painting or crafts</li>
+            <li>Pool games</li>
+            <li>Geyser viewing</li>
+            <li>Gift shop browsing</li>
+            <li>Lobby exploring</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="emoji">🔥</span>
+          <h3>Evening</h3>
+          <ul>
+            <li>Campfire activities</li>
+            <li>S’mores</li>
+            <li>Movies Under the Stars</li>
+            <li>Electrical Water Pageant</li>
+            <li>Lakefront walk</li>
+            <li>Cozy lobby time</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note"><strong>Best approach:</strong> Pick one or two activities that fit the kids’ energy. Do not try to do everything.</div>
+    </section>
+
+    <section id="weather" class="panel">
+      <h2>Orlando Weekend Weather</h2>
+      <p class="lede">Forecast for Orlando for Saturday, June 6 and Sunday, June 7.</p>
+
+      <div class="weather">
+        <div class="weather-card">
+          <div class="big">89°F</div>
+          <strong>Saturday, June 6</strong>
+          <div class="small">Nice with sunshine and some clouds. Low around 71°F.</div>
+        </div>
+
+        <div class="weather-card">
+          <div class="big">90°F</div>
+          <strong>Sunday, June 7</strong>
+          <div class="small">Partly sunny. Low around 73°F.</div>
+        </div>
+      </div>
+
+      <div class="note"><strong>Weather strategy:</strong> High UV and hot pavement are the real issues. Use water shoes, sunscreen face sticks, hats, and reapply sunscreen after lunch.</div>
+    </section>
+
+    <section id="packing" class="panel">
+      <h2>Packing Checklist</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="emoji">🌊</span>
+          <h3>Water Park Bag</h3>
+          <ul>
+            <li>Swimsuits already on</li>
+            <li>Water shoes / sandals</li>
+            <li>Towels</li>
+            <li>Sunscreen + face stick</li>
+            <li>Goggles</li>
+            <li>Water bottles</li>
+            <li>Waterproof phone pouch</li>
+            <li>Zip bags for wet clothes</li>
+            <li>Snacks</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="emoji">🌙</span>
+          <h3>Hotel / Evening Bag</h3>
+          <ul>
+            <li>Dry clothes</li>
+            <li>Pajamas for movie night</li>
+            <li>Glow bracelets</li>
+            <li>Portable charger</li>
+            <li>Toiletries</li>
+            <li>Light sweater or cover-up</li>
+            <li>Popcorn / movie snack</li>
+            <li>Kickoff bags</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="emoji">🚗</span>
+          <h3>Car / Departure</h3>
+          <ul>
+            <li>Easy breakfast</li>
+            <li>Extra snacks</li>
+            <li>Trash bag</li>
+            <li>Dry clothes for ride home</li>
+            <li>Chargers</li>
+            <li>Refillable waters</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <span class="emoji">✨</span>
+          <h3>Magic Extras</h3>
+          <ul>
+            <li>Disposable cameras</li>
+            <li>Glow bracelets</li>
+            <li>Small kickoff bags</li>
+            <li>Disney snacks</li>
+            <li>One group photo before everyone gets wet</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="footer">
+    Made for an easy, fun, sun-soaked Disney weekend 🌊🌲✨
+  </div>
+
+  <script>
+    function showTab(id) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active');
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  </script>
+</body>
+</html>
